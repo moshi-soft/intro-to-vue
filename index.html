@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <link rel="stylesheet" href="product_style.css">
+</head>
+<body>
+    <div class="nav-bar"></div>
+    <div id="app">
+        <!-- 
+           Various Expression:
+            {{product+'?'}}
+            {{firstName+LastName}}
+            {{clicked ? true:false}} // conditionally logic with ternary operator
+            {{message.split('').reverse().join('')}} // methods with data
+
+
+            Dynamically binds an attribute to an expression.
+            v-bind:src="expression"
+            :src="expression" // shorthand
+        
+        -->
+         <div class="product">
+             <div class="product-image">
+                 <img v-bind:src="image" alt="">
+             </div>
+             <div class="product-info">
+                 <h1> {{title}}</h1>
+                 <p v-if="inStock > 10> 0">In Stock</p>
+                 <p v-else-if="inStock <= 10 && inStock > 0">Almost sold out!</p>
+                 <p v-else
+                 :style="{textDecoration:'line-through'}"
+                 >Out of stock</p>
+                  <ul>
+                    <li v-for="detail in details">{{detail.detail}}</li>
+                </ul>
+                <div  v-for="(variant,index) in variants"
+                      :key="variant.variantId"
+                      class="color-box"
+                      :style="{backgroundColor:variant.variantColor}"
+                      @mouseover="updateProduct(index)"
+                >
+                </div>
+
+                <button v-on:click='addToCart'
+                :disabled="!inStock"
+                        :class="{disabledButton: !inStock}"
+                >Add to Cart</button>
+                <button v-on:click='removeFromCart'>Remove From Cart</button>
+
+                <div v-if="this.cart > 0" class="cart">
+                    <p>Cart({{cart}})</p>
+                </div>
+
+             </div>
+            
+         </div>        
+    </div>
+    <script src="../../vue.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
